@@ -68,5 +68,376 @@ The frontend is built with Next.js and React.
               ┌─────────────┴─────────────┐
               │                           │
               ▼                           ▼
-      Pa
+      Patient Dashboard          Doctor Dashboard
+              │
+              ▼
+        Vital Cards
 ```
+
+The frontend communicates with the FastAPI backend through the API service defined in:
+
+```text
+Frontend/src/services/api.ts
+```
+
+---
+
+## Current Features
+
+### Backend
+
+* FastAPI REST API
+* `GET /vitals` endpoint
+* Mock device
+* Simulated heart-rate data
+* FastAPI automatic API documentation
+
+### Frontend
+
+* Next.js
+* React
+* TypeScript
+* Patient dashboard
+* Doctor dashboard structure
+* Login page structure
+* Register page structure
+* Reusable navigation component
+* Reusable vital-sign card
+* Role card component
+* API service layer
+* User type definition
+* Automatic polling of vital-sign data
+
+Some frontend sections are currently **structural/prototypical** and are not yet connected to a complete authentication or user-management system.
+
+---
+
+## Example Data
+
+The current prototype works with simulated vital-sign data.
+
+Example:
+
+```json
+{
+  "device_id": "watch_001",
+  "heart_rate": 78
+}
+```
+
+The data model is intentionally simple at this stage and will evolve as the project develops.
+
+---
+
+## Project Structure
+
+```text
+Patient-Monitor/
+│
+├── Backend/
+│   │
+│   ├── device/
+│   │   └── device.py
+│   │
+│   ├── main.py
+│   │
+│   └── __pycache__/
+│
+├── Frontend/
+│   │
+│   ├── app/
+│   │   ├── dashboard/
+│   │   │   ├── patient/
+│   │   │   └── doctor/
+│   │   │
+│   │   ├── login/
+│   │   └── register/
+│   │
+│   ├── public/
+│   │
+│   └── src/
+│       │
+│       ├── components/
+│       │   ├── navbar.tsx
+│       │   ├── rolecard.tsx
+│       │   └── vitalcard.tsx
+│       │
+│       ├── services/
+│       │   └── api.ts
+│       │
+│       └── types/
+│           └── user.ts
+│
+├── README.md
+└── ROADMAP.md
+```
+
+> `__pycache__` contains Python-generated cache files and should normally be excluded from version control through `.gitignore`.
+
+---
+
+## Technologies
+
+| Area               | Technology   |
+| ------------------ | ------------ |
+| Frontend framework | Next.js      |
+| Frontend library   | React        |
+| Frontend language  | TypeScript   |
+| Backend language   | Python       |
+| API framework      | FastAPI      |
+| Development server | Uvicorn      |
+| Version control    | Git / GitHub |
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+Install:
+
+* Python
+* Node.js
+* npm
+* Git
+
+---
+
+## Running the Backend
+
+Open a terminal in the `Backend` directory.
+
+If a Python virtual environment is configured, activate it:
+
+```bash
+.\venv\Scripts\activate
+```
+
+Then start FastAPI:
+
+```bash
+uvicorn main:app --reload
+```
+
+The backend should be available at:
+
+```text
+http://localhost:8000
+```
+
+### API documentation
+
+FastAPI provides interactive API documentation at:
+
+```text
+http://localhost:8000/docs
+```
+
+The current prototype exposes:
+
+```text
+GET /vitals
+```
+
+This endpoint can be tested directly through the FastAPI documentation interface.
+
+---
+
+## Running the Frontend
+
+Open another terminal in the `Frontend` directory:
+
+```bash
+npm run dev
+```
+
+The Next.js application should be available at:
+
+```text
+http://localhost:3000
+```
+
+Open this address in a browser to access the application.
+
+---
+
+## Data Flow
+
+The current prototype follows this sequence:
+
+```text
+1. Mock device generates vital-sign data
+              ↓
+2. FastAPI exposes the data through /vitals
+              ↓
+3. Frontend API service requests the data
+              ↓
+4. React stores the received data
+              ↓
+5. VitalCard displays the vital sign
+              ↓
+6. Frontend repeats the request every 2 seconds
+```
+
+The polling mechanism provides a simple simulation of continuous monitoring.
+
+---
+
+## Frontend Components
+
+The frontend already contains a small component structure intended to support future expansion.
+
+### `Navbar`
+
+```text
+src/components/navbar.tsx
+```
+
+Reusable navigation component.
+
+### `RoleCard`
+
+```text
+src/components/rolecard.tsx
+```
+
+Component intended to represent different user roles.
+
+### `VitalCard`
+
+```text
+src/components/vitalcard.tsx
+```
+
+Reusable component for displaying vital-sign information.
+
+---
+
+## API Service
+
+Communication with the backend is separated into:
+
+```text
+src/services/api.ts
+```
+
+The frontend uses this service to request data from the FastAPI backend rather than placing API calls directly throughout the UI components.
+
+This creates a clearer separation between:
+
+```text
+UI Components
+      ↓
+API Service
+      ↓
+FastAPI Backend
+```
+
+---
+
+## Current Development Status
+
+### Implemented
+
+* [x] FastAPI backend
+* [x] Mock device
+* [x] `/vitals` API endpoint
+* [x] Mock heart-rate data
+* [x] Next.js frontend
+* [x] Patient dashboard structure
+* [x] Doctor dashboard structure
+* [x] Login page structure
+* [x] Register page structure
+* [x] Reusable frontend components
+* [x] Frontend API service
+* [x] User type definition
+* [x] Frontend/backend communication
+* [x] Periodic vital-sign polling
+* [x] Git/GitHub version control
+
+### Not yet implemented
+
+* [ ] Persistent database
+* [ ] Real authentication
+* [ ] User account management
+* [ ] Real patient/doctor authorization
+* [ ] Patient history
+* [ ] Real device integration
+* [ ] Data validation and advanced error handling
+* [ ] Multiple vital signs
+* [ ] HL7 integration
+* [ ] FHIR resources
+* [ ] FHIR server
+* [ ] Standardized clinical terminology
+
+---
+
+## Development Approach
+
+The project is intentionally developed **incrementally**.
+
+Rather than implementing the complete healthcare architecture immediately, each stage introduces a new technical concept while keeping the previous components functional.
+
+The current progression is:
+
+```text
+Prototype
+   ↓
+API
+   ↓
+Frontend
+   ↓
+Data persistence
+   ↓
+Device integration
+   ↓
+Healthcare interoperability
+   ↓
+HL7 / FHIR
+```
+
+---
+
+## Roadmap
+
+The planned development path is documented separately in:
+
+```text
+ROADMAP.md
+```
+
+The roadmap will contain the future technical milestones of the project.
+
+---
+
+## Project Purpose
+
+This is a personal learning and portfolio project focused on **Healthcare IT and Digital Health**.
+
+The purpose is to progressively understand how healthcare/device data can move through a software architecture:
+
+```text
+Device
+  ↓
+Data ingestion
+  ↓
+Backend API
+  ↓
+Data storage
+  ↓
+Healthcare interoperability
+  ↓
+Clinical application
+  ↓
+User interface
+```
+
+The project is intended to explore the technical concepts behind this workflow through a practical implementation.
+
+---
+
+## Disclaimer
+
+This project is an educational prototype.
+
+It uses simulated data and is **not intended for clinical use, diagnosis, treatment or medical decision-making**.
